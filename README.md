@@ -31,4 +31,3 @@ If you use SANSparallel in your work, please cite:
 Somervuo P, Holm L (2015) SANSparallel: interactive homology search
 against Uniprot. *Nucleic Acids Res.* 43, W24-29.
 https://doi.org/10.1093/nar/gkv317
-# SANAparallel
