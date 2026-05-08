@@ -20,6 +20,20 @@ SANSparallel performs fast protein database search using adaptive seeds.
 
 See the README.md in each subdirectory for details.
 
+## Installation
+
+Clone the repository and build each component:
+
+    git clone git@github.com:YOUR_USERNAME/SANSparallel.git
+    cd SANSparallel
+
+    make -C server
+    make -C client
+    make -C SA
+
+Each `make` compiles the binaries in place — no system-wide installation
+is performed. See the README.md in each subdirectory for prerequisites.
+
 ## Licence
 
 See `LICENCE`.
