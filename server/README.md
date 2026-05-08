@@ -25,7 +25,7 @@ Example:
 
     nohup server /data/uniprot/uniprot 54321 uniprot.Jan2026 &
 
-The server reads `<database>.sap` and `<database>.sres` at startup.
+The server reads `<database>.SAP` and `<database>.SRES` at startup.
 Output is appended to `nohup.out` unless redirected:
 
     nohup server /data/uniprot/uniprot 54321 uniprot.Jan2026 > logs/server.log 2>&1 &
@@ -49,7 +49,7 @@ the following files to exist before startup:
 | File | Created by |
 |------|------------|
 | `<database>.psq` | `saisformatdb.pl` |
-| `<database>.sap` | `sap8` |
-| `<database>.sres` | `sap8` |
+| `<database>.SAP` | `sap8` |
+| `<database>.SRES` | `sap8` |
 
 See `SA/README.md` for database creation instructions.
