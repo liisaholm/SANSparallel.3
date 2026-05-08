@@ -10,9 +10,10 @@
 #include <stdlib.h>   // exit
 #include <unistd.h>   // close
 #include <sys/socket.h> // send, recv
+#include <errno.h>
 //#define SERVER_PORT  12345
 #define TRUE 1
-#define BUFSIZE 4000000 #  65536
+#define BUFSIZE 65536
 
    int SERVER_PORT=12345;
    int H=1000,HX=1000,W=20,MIN_SUMMA=2,iquery=0;
@@ -73,10 +74,11 @@ void process_query(char *header, char *sequence)
     do {
         memset(buf, '\0', sizeof(buf));
         rc = recv(sockfd, buf, sizeof(buf)-1, 0);
-        if(rc <= 0) {
-            printf("ERROR in recv\n");
-            break;
-        }
+	if(rc <= 0) {
+	    fprintf(stderr, "ERROR in recv: rc=%d errno=%d %s\n",
+	            rc, errno, strerror(errno));
+	    break;
+	}
 	//fprintf(stderr, "# recv %d bytes, last 20: ", rc);
 	/*int dbg;
 	for(dbg = rc>20 ? rc-20 : 0; dbg < rc; dbg++)
@@ -254,7 +256,7 @@ main (int argc, char *argv[])
    }
 // After socket creation, add timeout:
    struct timeval tv;
-   tv.tv_sec = 320;  // 5 minute timeout
+   tv.tv_sec = 30;  // 5 minute timeout
    tv.tv_usec = 0;
    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
    /*************************************************/
