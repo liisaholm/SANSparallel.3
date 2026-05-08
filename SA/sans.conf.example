@@ -1,0 +1,4 @@
+# Copy to sans.conf and edit for your site.
+
+SUFTEST_EXE    = /data/uniprot/mksary64
+LD_LIB_PATH    = /usr/local/lib

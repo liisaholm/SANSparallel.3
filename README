@@ -1,0 +1,43 @@
+sansparallel/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── Makefile                    # top-level: builds all three components
+│
+├── server/                     # Fortran core + C supplements, runs continuously
+│   ├── sans_server.f
+│   ├── diagonal_sum.f
+│   ├── hsp_chain.f
+│   ├── util.c
+│   └── Makefile
+│
+├── client/                     # standalone C client, used per-query
+│   ├── sans_client.c
+│   ├── protocol.h
+│   └── Makefile
+│
+├── SA/                         # suffix array construction, run once per database
+│   ├── README.md               # documents mksary64 dependency explicitly here
+│   ├── Makefile                # checks for mksary64, drives database build
+│   ├── build_sa.sh             # wrapper: fetch FASTA, run mksary64, validate
+│   ├── check_dependencies.sh   # standalone check for mksary64 + any SA tools
+│   └── validate_sa.py          # sanity-check the resulting index
+│
+├── daemon/
+│   ├── daliserver_daemon.py
+│   └── rr_pick.py
+│
+├── scripts/
+│   └── do_daemon_channel.csh
+│
+├── tests/
+│   ├── server/
+│   ├── client/
+│   └── SA/
+│       └── data/
+│           └── sample.fasta    # small test FASTA to build a toy SA
+│
+└── docs/
+    ├── protocol.md
+    ├── deployment.md
+    └── database_creation.md    # full mksary64 install instructions live here

@@ -1,0 +1,32 @@
+# site-specific configuration file
+sans.conf
+
+# C / Fortran compiled output
+*.o
+*.a
+*.so
+*.mod
+*.out
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+.venv/
+
+# Perl
+*.bak
+
+# Runtime / daemon
+*.pid
+*.err
+*.log
+daemon.pid
+
+# Editor noise
+.DS_Store
+*~
+.idea/
+.vscode/

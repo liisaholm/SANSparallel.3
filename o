@@ -1,0 +1,57 @@
+OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017
+debug1: Reading configuration data /home/luholm/.ssh/config
+debug1: /home/luholm/.ssh/config line 1: Applying options for *
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 58: Applying options for *
+debug1: Connecting to github.com [140.82.121.3] port 22.
+debug1: Connection established.
+debug1: identity file /home/luholm/.ssh/id_rsa type 1
+debug1: key_load_public: No such file or directory
+debug1: identity file /home/luholm/.ssh/id_rsa-cert type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /home/luholm/.ssh/id_dsa type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /home/luholm/.ssh/id_dsa-cert type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /home/luholm/.ssh/id_ecdsa type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /home/luholm/.ssh/id_ecdsa-cert type -1
+debug1: identity file /home/luholm/.ssh/id_ed25519 type 4
+debug1: key_load_public: No such file or directory
+debug1: identity file /home/luholm/.ssh/id_ed25519-cert type -1
+debug1: Enabling compatibility mode for protocol 2.0
+debug1: Local version string SSH-2.0-OpenSSH_7.4
+debug1: Remote protocol version 2.0, remote software version 00779af
+debug1: no match: 00779af
+debug1: Authenticating to github.com:22 as 'git'
+debug1: SSH2_MSG_KEXINIT sent
+debug1: SSH2_MSG_KEXINIT received
+debug1: kex: algorithm: curve25519-sha256
+debug1: kex: host key algorithm: ecdsa-sha2-nistp256
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: curve25519-sha256 need=64 dh_need=64
+debug1: kex: curve25519-sha256 need=64 dh_need=64
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug1: Server host key: ecdsa-sha2-nistp256 SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM
+debug1: Host 'github.com' is known and matches the ECDSA host key.
+debug1: Found key in /home/luholm/.ssh/known_hosts:20
+debug1: rekey after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug1: SSH2_MSG_NEWKEYS received
+debug1: rekey after 134217728 blocks
+debug1: SSH2_MSG_EXT_INFO received
+debug1: kex_input_ext_info: server-sig-algs=<ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ecdsa-sha2-nistp256@openssh.com,ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa>
+debug1: kex_input_ext_info: publickey-hostbound@openssh.com=<0>
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug1: Authentications that can continue: publickey
+debug1: Next authentication method: publickey
+debug1: Offering RSA public key: /home/luholm/.ssh/id_rsa
+debug1: Authentications that can continue: publickey
+debug1: Trying private key: /home/luholm/.ssh/id_dsa
+debug1: Trying private key: /home/luholm/.ssh/id_ecdsa
+debug1: Offering ED25519 public key: /home/luholm/.ssh/id_ed25519
+debug1: Server accepts key: pkalg ssh-ed25519 blen 51
+debug1: No more authentication methods to try.
+Permission denied (publickey).
