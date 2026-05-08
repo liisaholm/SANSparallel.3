@@ -1,11 +1,5 @@
 # SANSparallel
 
-Implementation of the SANSparallel protein sequence homology search server
-described in:
-
-> Somervuo P, Holm L (2015) SANSparallel: interactive homology search
-> against Uniprot. *Nucleic Acids Res.* 43, W24-29.
-
 SANSparallel performs fast protein database search using adaptive seeds.
 
 ## Components
