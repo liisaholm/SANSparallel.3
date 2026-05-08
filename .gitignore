@@ -1,32 +1,34 @@
-# site-specific configuration file
-sans.conf
+# Compiled binaries
+server/server
+client/client
+SA/isa8
+SA/sap8
+SA/mksary64
 
-# C / Fortran compiled output
-*.o
-*.a
-*.so
+# Database files
+*.psq
+*.phr
+*.pin
+*.SA
+*.isa
+*.sap
+*.sres
+
 *.mod
-*.out
+*.o
+
+# Site-specific config
+SA/sans.conf
+
+# MPI output logs
+mpi.*
+
+# Runtime
+nohup.out
+*.pid
+*.log
+*.err
 
 # Python
 __pycache__/
 *.pyc
-*.pyo
-*.egg-info/
-dist/
-.venv/
-
-# Perl
-*.bak
-
-# Runtime / daemon
-*.pid
-*.err
-*.log
-daemon.pid
-
-# Editor noise
-.DS_Store
-*~
-.idea/
-.vscode/
