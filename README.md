@@ -1,6 +1,6 @@
 # SANSparallel
 
-SANSparallel performs fast protein database search using adaptive seeds.
+SANSparallel is an MPI client-server performing fast protein database search using adaptive seeds.
 
 ## Components
 
