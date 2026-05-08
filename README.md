@@ -18,7 +18,7 @@ See the README.md in each subdirectory for details.
 
 Clone the repository and build each component:
 
-    git clone git@github.com:liisaholm/SANSparallel.git
+    git clone git@github.com:liisaholm/SANSparallel.3.git
     cd SANSparallel
 
     make -C server
