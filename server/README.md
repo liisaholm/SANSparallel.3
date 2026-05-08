@@ -39,7 +39,7 @@ Record the PID if you need to stop the server later:
 
     make
 
-Requires `gfortran` and `gcc`.
+Requires `openmpi, gfortran` and `gcc`.
 
 ## Database files
 
