@@ -1594,7 +1594,10 @@ c=====================================================================
         integer, parameter :: MAXBLOCK=7000000
         character(len=MAXBLOCK) :: block
         integer nproc_sans
- 
+        logical flag
+        integer i, waketag
+        parameter(waketag=99)
+
         ! allocate hash tables (per-rank, done once)
         allocate(linklist_first(nprot),stat=ok)
         call MPI_COMM_SIZE(MPI_COMM_SANS,nproc,ierr)
@@ -1636,9 +1639,49 @@ c=====================================================================
                 ! All ranks receive block header: [block_len, n_queries]
                 ! C side: MPI_Isend(header, 2, MPI_INT, r, tag=0, ...)
                 !---------------------------------------------------------
-                call MPI_IRECV(header,2,MPI_INTEGER,socket,
-     $                  0,MPI_COMM_WORLD,request,ierr)
-                call MPI_WAIT(request,stat,ierr)
+!                call MPI_IRECV(header,2,MPI_INTEGER,socket,
+!     $                  0,MPI_COMM_WORLD,request,ierr)
+!                call MPI_WAIT(request,stat,ierr)
+
+        ! reset t0 on each received request (already done at bottom of loop)
+        ! t0=MPI_WTIME() 
+
+        if(rank.eq.0) then
+            flag = .false.
+            do while(.not.flag)
+                call MPI_IPROBE(socket, 0, MPI_COMM_WORLD,
+     $              flag, stat, ierr)
+                if(.not.flag) then
+                    dt = MPI_WTIME() - t0
+                    if(dt .gt. TIMEOUT) then
+                        ! idle for more than 5 minutes: snooze
+                        call sleep(1)
+                    end if
+                    ! else: active state, keep polling fast (no sleep)
+                end if
+            end do
+            call MPI_RECV(header, 2, MPI_INTEGER, socket, 0,
+     $          MPI_COMM_WORLD, stat, ierr)
+            ! wake all workers explicitly
+            do i=1,nproc_sans-1
+                call MPI_SEND(header, 2, MPI_INTEGER, i,
+     $              waketag, MPI_COMM_SANS, ierr)
+            end do
+        else
+            flag = .false.
+            do while(.not.flag)
+                call MPI_IPROBE(0, waketag, MPI_COMM_SANS,
+     $              flag, stat, ierr)
+                if(.not.flag) then
+                    dt = MPI_WTIME() - t0
+                    if(dt .gt. TIMEOUT) call sleep(1)
+                end if
+            end do
+            call MPI_RECV(header, 2, MPI_INTEGER, 0,
+     $          waketag, MPI_COMM_SANS, stat, ierr)
+        end if
+        ! header is now on all ranks — skip MPI_BCAST or keep it as
+        ! no-op
 
                 block_len=header(1)
                 n_queries=header(2)
