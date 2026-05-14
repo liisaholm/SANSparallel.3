@@ -1686,8 +1686,8 @@ c=====================================================================
                 block_len=header(1)
                 n_queries=header(2)
 
-                write(*,*) '# do_all: block_len=',block_len,
-     $                  ' n_queries=',n_queries
+!                write(*,*) '# do_all: block_len=',block_len,
+!     $                  ' n_queries=',n_queries
 
                 !---------------------------------------------------------
                 ! Shutdown sentinel: block_len=0
@@ -1960,7 +1960,11 @@ c
         ! extract runtime parameters from query string
         ! MINKEYSCORE, H, R, HX, W, MIN_SUMMA, tubewidth,
         ! EVALUE_CUTOFF
-        if(qlen_in.gt.MAXRES) goto 99 ! ill-formed query
+        !write(*,*) 'qlen_in',qlen_in, MAXRES
+        if(qlen_in.gt.MAXRES) then
+               ! write(*,*) 'skipping query'
+                goto 99 ! ill-formed query
+        end if
         read(qstring(1:qlen_in),*,err=99,end=99) 
      $          qprot,H,HX,W,MIN_SUMMA,
      $          MINKEYSCORE,evalue_cutoff,R,votelist_size,protocol,
@@ -1968,7 +1972,11 @@ c
         lfasta=(qprot.ge.0) ! hack: no sseq output if qprot is negative
         ! check qseq  is [A-Za-z]
         qseqlen=len_trim(qseq) ! module-level qseqlen
-        if(qseqlen.le.7) goto 99 
+        !write(*,*) 'qseqlen', qseqlen
+        if(qseqlen.le.7) then
+                !write(*,*) 'skippring query'
+                goto 99 
+        end if
         do i=1,qseqlen
                 k=iachar(qseq(i:i))
                 if(k.lt.65.or.k.gt.122.or.(k.gt.90.and.k.lt.97)) then
@@ -2216,15 +2224,13 @@ c
 
         ! only master sends result to socket
         if(rank.ne.0) return
-c        write(a,*) '<QUERY nid=',qprot,'>',char(10),
-c     $  '#ill-formed query: ',qstring(1:qseqlen),char(10),
-c     $  '</QUERY>',char(10)
         write(a,*) '<QUERY nid=',qprot,'>',char(10),
      $  '#ill-formed query: length = ',qseqlen,char(10),
      $  '</QUERY>',char(10)
         lmsg=0
         call writeresult(a,len_trim(a)+1,resultlines,lmsg)
         call send_result(qprot,lmsg,resultlines)
+        !write(*,*) 'ill-formed qstring',trim(qstring)
 
         end subroutine illformed
 c

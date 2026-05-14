@@ -294,8 +294,8 @@ if(use_tcp) {
             clients[i].buf[clients[i].buf_len] = '\0';
             clients[i].last_activity = time(NULL);
 
-            //fprintf(stderr, "# server_c: fd=%d recv %d bytes (total %d)\n",
-            //        fd, nr, clients[i].buf_len);
+            fprintf(stderr, "# server_c: fd=%d recv %d bytes (total %d)\n",
+                    fd, nr, clients[i].buf_len);
 
             /* Process all complete queries now available */
             drain_client(&clients[i], i, clients, &master_set,
@@ -377,6 +377,24 @@ static void drain_client(Client *c, int client_idx,
                          int *max_fd, char *result_buf, int nproc)
 {
 
+    /* Strip 8-byte framing header if present (new client protocol) */
+    if (c->buf_len >= 2*(int)sizeof(int)) {
+        int *hdr = (int*)c->buf;
+        int claimed_len  = hdr[0];
+        int claimed_nq   = hdr[1];
+        /* Sanity check: if it looks like a framing header, consume it */
+        if (claimed_nq >= 1 && claimed_nq <= 1000 &&
+            claimed_len > 0  && claimed_len < CLIENT_BUF_SIZE) {
+            memmove(c->buf, c->buf + 2*sizeof(int),
+                    c->buf_len - 2*sizeof(int));
+            c->buf_len -= 2*sizeof(int);
+            c->buf[c->buf_len] = '\0';
+//            fprintf(stderr,
+//               "# drain: stripped framing header"
+//              " block_len=%d n_queries=%d\n",
+//                claimed_len, claimed_nq);
+        }
+    }
 
     /* Try to read more data inline */
     if (c->buf_len < CLIENT_BUF_SIZE - 1) {
